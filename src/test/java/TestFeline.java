@@ -1,8 +1,6 @@
 import com.example.Feline;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.Spy;
 
@@ -29,7 +27,7 @@ public class TestFeline {
         // Проверка результата
         assertEquals(List.of("Животные", "Птицы", "Рыба"), food);
 
-        // Проверка, что getFood вызван с правильным параметром
+        // Проверка, что getFood вызван 1 раз с правильным параметром
         verify(feline, times(1)).getFood("Хищник");
     }
 
@@ -42,7 +40,7 @@ public class TestFeline {
         Exception exception = assertThrows(Exception.class, () -> feline.eatMeat());
         assertEquals("Ошибка getFood", exception.getMessage());
 
-        // Проверяем, что метод getFood был вызван
+        // Проверяем, что метод getFood был вызван 1 раз
         verify(feline, times(1)).getFood("Хищник");
     }
 

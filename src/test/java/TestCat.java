@@ -42,7 +42,7 @@ public class TestCat {
         List<String> food = catMock.getFood();
         assertEquals(List.of("Животные", "Птицы", "Рыба"), food);
 
-        // Проверяем, что метод predator.eatMeat вызван
+        // Проверяем, что метод predator.eatMeat вызван 1 раз
         verify(predator, times(1)).eatMeat();
     }
 
@@ -55,7 +55,7 @@ public class TestCat {
         Exception exception = assertThrows(Exception.class, () -> catMock.getFood());
         assertEquals("Ошибка получения пищи", exception.getMessage());
 
-        // Проверяем, что метод feline.getFood("Хищник") вызван
+        // Проверяем, что метод feline.getFood("Хищник") вызван 1 раз
         verify(predator, times(1)).eatMeat();
     }
 }
