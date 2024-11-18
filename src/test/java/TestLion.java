@@ -29,6 +29,7 @@ public class TestLion {
         this.expectedHasMane = expectedHasMane;
     }
 
+    // В тесте конструктора объектов класса Lion используем параметризацию
     @Parameterized.Parameters
     public static Collection<Object[]> parameters() {
         return Arrays.asList(new Object[][]{
