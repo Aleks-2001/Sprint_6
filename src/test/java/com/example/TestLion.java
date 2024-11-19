@@ -57,14 +57,14 @@ public class TestLion {
     @Test
     public void testGetKittens() throws Exception {
         // Настраиваем мок Feline
-        when(felineMock.getKittens()).thenReturn(3);
+        when(felineMock.getKittens()).thenReturn(1);
 
         // Создаём объект Lion с замокированным Feline
         Lion lion = new Lion("Самец");
         lion.feline = felineMock;
 
         // Проверяем метод getKittens
-        assertEquals(3, lion.getKittens());
+        assertEquals(1, lion.getKittens());
         verify(felineMock, times(1)).getKittens();
     }
 
