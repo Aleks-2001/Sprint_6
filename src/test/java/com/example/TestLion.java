@@ -29,13 +29,12 @@ public class TestLion {
         this.expectedHasMane = expectedHasMane;
     }
 
-    // В тесте конструктора объектов класса Lion используем параметризацию
     @Parameterized.Parameters
     public static Collection<Object[]> parameters() {
         return Arrays.asList(new Object[][]{
                 {"Самец", null, true},
                 {"Самка", null, false},
-                {"Другое", "Используйте допустимые значения пола животного - самец или самка", false}
+                {"Неверное значение", "Используйте допустимые значения пола животного - самец или самка", false}
         });
     }
 
@@ -58,14 +57,14 @@ public class TestLion {
     @Test
     public void testGetKittens() throws Exception {
         // Настраиваем мок Feline
-        when(felineMock.getKittens()).thenReturn(1);
+        when(felineMock.getKittens()).thenReturn(3);
 
         // Создаём объект Lion с замокированным Feline
         Lion lion = new Lion("Самец");
         lion.feline = felineMock;
 
         // Проверяем метод getKittens
-        assertEquals(1, lion.getKittens());
+        assertEquals(3, lion.getKittens());
         verify(felineMock, times(1)).getKittens();
     }
 
