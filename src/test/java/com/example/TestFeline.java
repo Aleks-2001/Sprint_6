@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class TestFeline {
 
     @Spy
-    private Feline feline;
+    private Feline feline;  // @Spy сохраняет реальную логику класса Feline, но позволяет мокировать отдельные методы.
 
 
     @Test
@@ -47,24 +47,21 @@ public class TestFeline {
 
 
     @Test
-    public void testGetFamily() {
+    public void testFelineGetFamily() {
         // Проверка что метод возвращает строку "Кошачьи"
         assertEquals("Кошачьи", feline.getFamily());
     }
 
     @Test
-    public void testGetKittensDefault() {
+    public void testFelineGetKittensDefault() {
         // Проверка что метод getKittens вернет 1 в случает вызова его без параметров
         assertEquals(1, feline.getKittens());
     }
 
     @Test
-    public void testGetKittensWithParameter() {
+    public void testFelineGetKittensWithParameter() {
         // Проверка что метод getKittens вернет 5 в случает вызова его c параметром 5
         assertEquals(5, feline.getKittens(5));
     }
-
-
-
 
 }

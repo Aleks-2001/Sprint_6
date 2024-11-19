@@ -14,16 +14,14 @@ public class TestCat {
 
     @Mock
     private Feline felineMock;
-
     private Cat catMock;
-
     private Predator predator;
 
     @Before
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        catMock = new Cat(felineMock);
-        this.predator = felineMock;
+        MockitoAnnotations.openMocks(this); // Инициализация моков перед каждым тестом.
+        catMock = new Cat(felineMock);  // Создаётся объект Cat, использующий felineMock...
+        this.predator = felineMock;     // ...в качестве реализации интерфейса Predator
     }
 
     @Test
@@ -34,15 +32,12 @@ public class TestCat {
 
     @Test
     public void testCatGetFood() throws Exception {
-        // Настраиваем мок
-        when(catMock.getFood()).thenReturn(List.of("Животные", "Птицы", "Рыба"));
+        when(catMock.getFood()).thenReturn(List.of("Животные", "Птицы", "Рыба"));  // Настраиваем мок
 
-        // Проверяем метод
-        List<String> food = catMock.getFood();
+        List<String> food = catMock.getFood();  // Проверяем, что метод вернет ожидаемый список еды
         assertEquals(List.of("Животные", "Птицы", "Рыба"), food);
 
-        // Проверяем, что метод predator.eatMeat вызван 1 раз
-        verify(predator, times(1)).eatMeat();
+        verify(predator, times(1)).eatMeat();  // Проверяем, что метод predator.eatMeat вызван 1 раз
     }
 
     @Test
