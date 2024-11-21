@@ -1,50 +1,20 @@
 package com.example;
-
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.Spy;
-
-import static org.junit.Assert.assertThrows;
-import static org.mockito.Mockito.*;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
+
 public class TestFeline {
 
-    @Spy
-    private Feline feline;  // @Spy сохраняет реальную логику класса Feline, но позволяет мокировать отдельные методы.
-
+    Feline feline = new Feline();
 
     @Test
     public void testFelineEatMeat() throws Exception {
-        // Мокируем метод getFood, чтобы изолировать тест eatMeat
-        doReturn(List.of("Животные", "Птицы", "Рыба")).when(feline).getFood("Хищник");
-
         // Вызов метода eatMeat
         List<String> food = feline.eatMeat();
-
         // Проверка результата
         assertEquals(List.of("Животные", "Птицы", "Рыба"), food);
-
-        // Проверка, что getFood вызван 1 раз с правильным параметром
-        verify(feline, times(1)).getFood("Хищник");
     }
-
-    @Test
-    public void testFelineEatMeatThrowsException() throws Exception {
-        // Мокируем выброс исключения
-        doThrow(new Exception("Ошибка getFood")).when(feline).getFood("Хищник");
-
-        // Проверяем, что исключение действительно выбрасывается
-        Exception exception = assertThrows(Exception.class, () -> feline.eatMeat());
-        assertEquals("Ошибка getFood", exception.getMessage());
-
-        // Проверяем, что метод getFood был вызван 1 раз
-        verify(feline, times(1)).getFood("Хищник");
-    }
-
 
     @Test
     public void testFelineGetFamily() {

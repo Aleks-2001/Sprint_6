@@ -3,23 +3,25 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import java.util.Arrays;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 
 public class TestLion {
 
-    private String sex;
-    private String expectedExceptionMessage;
-    private boolean expectedHasMane;
+    private Lion lion;
 
     @Mock
     private Feline felineMock;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);   // Инициализация моков для каждого теста
+      lion = new Lion("Самец");
+      lion.feline = felineMock;    // Создаём реальный объект Lion с замокированным Feline
     }
 
     @Test
@@ -28,25 +30,20 @@ public class TestLion {
         when(felineMock.getKittens()).thenReturn(1);
 
         // Создаём объект Lion с замокированным Feline
-        Lion lion = new Lion("Самец");
-        lion.feline = felineMock;
+        int getKittensActual = lion.getKittens();
 
         // Проверяем, что метод getKittens в Lion вызывает метод у Feline, метод вызван 1 раз.
-        assertEquals(1, lion.getKittens());
+        assertEquals(1, getKittensActual);
         verify(felineMock, times(1)).getKittens();
     }
 
     @Test
     public void testLionGetFood() throws Exception {
         // Настраиваем мок Feline для возврата списка еды
-        when(felineMock.getFood("Хищник")).thenReturn(Arrays.asList("Животные", "Птицы", "Рыба"));
+        when(felineMock.getFood("Хищник")).thenReturn(Arrays.asList("Животные", "Птицы", "а также рыба"));
 
-        // Создаём объект Lion с замокированным Feline
-        Lion lion = new Lion("Самец");
-        lion.feline = felineMock;
-
-        // Проверяем, что метод getFood в Lion вызывает метод у Feline, метод вызван 1 раз.
-        assertEquals(Arrays.asList("Животные", "Птицы", "Рыба"), lion.getFood());
+        // Проверяем, что метод getFood в Lion вызывает метод у мока Feline, метод вызван 1 раз.
+        assertEquals(Arrays.asList("Животные", "Птицы", "а также рыба"), lion.getFood());
         verify(felineMock, times(1)).getFood("Хищник");
     }
 
@@ -54,10 +51,6 @@ public class TestLion {
     public void testLionGetFoodThrowsException() throws Exception {
         // Настраиваем мок Feline для выброса исключения при вызове getFood.
         when(felineMock.getFood("Хищник")).thenThrow(new Exception("Ошибка получения пищи"));
-
-        // Создаём объект Lion с замокированным Feline
-        Lion lion = new Lion("Самец");
-        lion.feline = felineMock;
 
         // Проверяем, что getFood выбрасывает исключение, сообщение корректное, метод вызван 1 раз.
         Exception exception = assertThrows(Exception.class, lion::getFood);

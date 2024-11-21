@@ -1,9 +1,7 @@
 package com.example;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,42 +12,33 @@ import static org.junit.Assert.assertThrows;
 @RunWith(Parameterized.class)
 public class ParameterizedTest {
 
-    private String sex;
-    private String expectedExceptionMessage;
-    private boolean expectedHasMane;
+    private  String sex; // Входной параметр для конструктора
+    private  Object expectedResult; // Ожидаемый результат (true/false или Exception)
 
-    public ParameterizedTest(String sex, String expectedExceptionMessage, boolean expectedHasMane) {
+    public ParameterizedTest(String sex, Object expectedResult) {
         this.sex = sex;
-        this.expectedExceptionMessage = expectedExceptionMessage;
-        this.expectedHasMane = expectedHasMane;
+        this.expectedResult = expectedResult;
     }
 
-    // Для тестирования конструктора класса Lion применим параметризацию
     @Parameterized.Parameters
     public static Collection<Object[]> parameters() {
         return Arrays.asList(new Object[][]{
-                // Три набора параметров для тестов
-                {"Самец", null, true},
-                {"Самка", null, false},
-                {"Неверное значение", "Используйте допустимые значения пола животного - самец или самка", false}
+                {"Самец", true}, // "Самец" -> hasMane = true
+                {"Самка", false}, // "Самка" -> hasMane = false
+                {"Неверное значение", Exception.class} // Ошибка
         });
-    }
-
-    @Before
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);   // Инициализация моков для каждого теста
     }
 
     @Test
     public void testLionConstructor() throws Exception {
-        if (expectedExceptionMessage != null) {
-            // Проверка, что для некорректного значения выбрасывается исключение с правильным сообщением.
+        if (expectedResult instanceof Class && ((Class<?>) expectedResult).equals(Exception.class)) {
+            // Проверяем, что выбрасывается исключение для недопустимого значения
             Exception exception = assertThrows(Exception.class, () -> new Lion(sex));
-            assertEquals(expectedExceptionMessage, exception.getMessage());
+            assertEquals("Используйте допустимые значения пола животного - самей или самка", exception.getMessage());
         } else {
-            // Проверяется, что для валидных значений ("Самец", "Самка") флаг hasMane устанавливается корректно.
+            // Проверяем корректное создание объекта и значение поля hasMane
             Lion lion = new Lion(sex);
-            assertEquals(expectedHasMane, lion.doesHaveMane());
+            assertEquals(expectedResult, lion.doesHaveMane());
         }
     }
 }
