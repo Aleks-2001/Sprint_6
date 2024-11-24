@@ -20,8 +20,8 @@ public class TestLion {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);   // Инициализация моков для каждого теста
-      lion = new Lion("Самец");
-      lion.feline = felineMock;    // Создаём реальный объект Lion с замокированным Feline
+      lion = new Lion("Самец", felineMock);   // Создаём реальный объект Lion с замокированным Feline
+//      lion.feline = felineMock;    // Создаём реальный объект Lion с замокированным Feline
     }
 
     @Test
@@ -56,6 +56,13 @@ public class TestLion {
         Exception exception = assertThrows(Exception.class, lion::getFood);
         assertEquals("Ошибка получения пищи", exception.getMessage());
         verify(felineMock, times(1)).getFood("Хищник");
+    }
+
+    @Test
+    public void testLionConstructorThrowsException() throws Exception {
+        Exception exception = assertThrows(Exception.class, () -> new Lion("Другое", felineMock));
+        assertEquals("Используйте допустимые значения пола животного - самец или самка", exception.getMessage());
+
     }
 }
 
