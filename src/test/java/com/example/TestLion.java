@@ -21,7 +21,6 @@ public class TestLion {
     public void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);   // Инициализация моков для каждого теста
       lion = new Lion("Самец", felineMock);   // Создаём реальный объект Lion с замокированным Feline
-//      lion.feline = felineMock;    // Создаём реальный объект Lion с замокированным Feline
     }
 
     @Test

@@ -18,10 +18,10 @@ public class Lion {
         this.feline = feline;
     }
 
-    //  Перегруженный конструктор, сохраняет возможность упрощенного создания объекта Lion
-//    public Lion(String sex) throws Exception {
-//        this(sex, new Feline()); // Вызывает основной конструктор
-//    }
+      // Перегруженный конструктор, сохраняет возможность упрощенного создания объекта Lion
+    public Lion(String sex) throws Exception {
+        this(sex, new Feline()); // Вызывает основной конструктор
+    }
 
     public int getKittens() {
         return feline.getKittens();

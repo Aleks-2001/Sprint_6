@@ -8,13 +8,12 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 @RunWith(Parameterized.class)
 public class ParameterizedTest {
 
     private  String sex; // Входной параметр для конструктора
-    private boolean expectedHasMane;
+    private boolean expectedHasMane;  // Входной параметр для конструктора
 
     @Mock
     private Feline felineMock;
